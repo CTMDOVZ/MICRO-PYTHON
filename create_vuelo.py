@@ -1,21 +1,21 @@
 import boto3
 
 def lambda_handler(event, context):
-    # Obtener los datos del evento
-    id_vuelo = event['body']['id_vuelo']
-    id_aerolinea = event['body']['id_aerolinea']
-    codigo_vuelo = event['body']['codigo_vuelo']
-    origen = event['body']['origen']
-    destino = event['body']['destino']
-    fecha_salida = event['body']['fecha_salida']
-    fecha_llegada = event['body']['fecha_llegada']
-    capacidad = event['body']['capacidad']
+ 
+    id_vuelo = event['id_vuelo']
+    id_aerolinea = event['id_aerolinea']
+    codigo_vuelo = event['codigo_vuelo']
+    origen = event['origen']
+    destino = event['destino']
+    fecha_salida = event['fecha_salida']
+    fecha_llegada = event['fecha_llegada']
+    capacidad = event['capacidad']
 
-    
+
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('Vuelos')
+    table = dynamodb.Table('t_vuelo')  
 
-    
+
     vuelo = {
         'id_vuelo': id_vuelo,
         'id_aerolinea': id_aerolinea,
@@ -27,11 +27,11 @@ def lambda_handler(event, context):
         'capacidad': capacidad
     }
 
-    
+
     response = table.put_item(Item=vuelo)
 
-    
+    # Retornar una respuesta exitosa
     return {
         'statusCode': 200,
-        'body': response
+        'body': 'Vuelo creado con éxito'
     }
